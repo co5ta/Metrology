@@ -13,11 +13,11 @@ class CategoryCollectionViewDelegate: NSObject {
     var viewController: CategoryViewController? {
         didSet { bind() }
     }
-    var categories: [Category] = [] {
+    var categories: [CategoryViewModel] = [] {
         didSet { update() }
     }
     
-    init(categories: [Category]) {
+    init(categories: [CategoryViewModel]) {
         self.categories = categories
     }
     
@@ -50,7 +50,7 @@ extension CategoryCollectionViewDelegate: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width - 15) / 2
-        return CGSize(width: width, height: width * 0.5)
+        return CGSize(width: width, height: width * 0.65)
     }
 }
 

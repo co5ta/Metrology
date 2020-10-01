@@ -11,13 +11,11 @@ import UIKit
 class CategoryViewController: UIViewController {
 
     @IBOutlet weak var categoryCollectionView: UICollectionView!
-    let categoryCollectionViewDelegate = CategoryCollectionViewDelegate(categories: Category.allCases)
+    let categoryCollectionViewDelegate = CategoryCollectionViewDelegate(categories: CategoryViewModel.all)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
-        view.backgroundColor = .red
-        categoryCollectionView.backgroundColor = .blue
     }
 }
 

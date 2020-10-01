@@ -14,8 +14,14 @@ enum Category: String, CaseIterable {
     
     var units: [Unit] {
         switch self {
-        case .Length: return [UnitLength.miles, UnitLength.meters, UnitLength.feet]
-        case .Mass: return [UnitMass.pounds, UnitMass.grams, UnitMass.metricTons]
+        case .Length: return [UnitLength.meters, UnitLength.miles, UnitLength.feet, UnitLength.inches]
+        case .Mass: return [UnitMass.pounds, UnitMass.grams, UnitMass.shortTons, UnitMass.ounces]
         }
     }
+    
+    static var formatter: MeasurementFormatter = {
+        let formatter = MeasurementFormatter()
+        formatter.unitStyle = .long
+        return formatter
+    }()
 }

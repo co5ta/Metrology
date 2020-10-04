@@ -19,6 +19,9 @@ struct CategoryViewModel {
     var description: String {
         category.units.map { Category.formatter.string(from: $0).capitalized }.joined(separator: ", ")
     }
+    var units: [Unit] {
+        category.units
+    }
     static var all: [CategoryViewModel] {
         Category.allCases.map { CategoryViewModel(category: $0) }
     }

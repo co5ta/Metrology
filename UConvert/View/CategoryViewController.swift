@@ -23,4 +23,11 @@ extension CategoryViewController {
     private func configure() {
         categoryCollectionViewDelegate.viewController = self
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let vc = segue.destination as? UnitsViewController,
+            let cell = sender as? CategoryCell
+            else { return }
+        vc.category = cell.category
+    }
 }

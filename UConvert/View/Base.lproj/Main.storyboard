@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Unités de mesure-->
+        <!--Categories-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="CategoryViewController" customModule="UConvert" customModuleProvider="target" sceneMemberID="viewController">
@@ -80,6 +80,7 @@
                                             <outlet property="descriptionLabel" destination="5Mw-ao-3ac" id="edJ-pC-LEF"/>
                                             <outlet property="imageView" destination="smp-7Y-ayi" id="gHM-a1-QP6"/>
                                             <outlet property="titleLabel" destination="oLQ-xa-A6K" id="1Qc-l1-8iv"/>
+                                            <segue destination="f6t-Ot-zAt" kind="show" id="ZRW-ir-YBY"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -94,7 +95,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Unités de mesure" id="TDG-i5-jaa"/>
+                    <navigationItem key="navigationItem" title="Categories" id="TDG-i5-jaa"/>
                     <connections>
                         <outlet property="categoryCollectionView" destination="g7L-BD-S1w" id="XBg-OQ-1Vs"/>
                     </connections>
@@ -102,6 +103,76 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1046.25" y="125.70422535211267"/>
+        </scene>
+        <!--Units-->
+        <scene sceneID="BuS-uJ-8tI">
+            <objects>
+                <viewController id="f6t-Ot-zAt" customClass="UnitsViewController" customModule="UConvert" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dVg-xF-xuc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HTg-Ej-y57">
+                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UnitCell" id="sGH-MK-8FB" userLabel="UnitCell" customClass="UnitCell" customModule="UConvert" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="50.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sGH-MK-8FB" id="kP9-NO-u1c">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="50.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meters" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dl5-KK-wEK">
+                                                    <rect key="frame" x="5" y="15.5" width="51" height="20"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qkI-4o-bmr">
+                                                    <rect key="frame" x="265" y="0.0" width="50" height="50.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="Hqu-zL-TRC"/>
+                                                        <constraint firstAttribute="height" constant="50" id="uQQ-IU-oNj"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Dl5-KK-wEK" firstAttribute="leading" secondItem="kP9-NO-u1c" secondAttribute="leading" constant="5" id="FT4-fh-8sS"/>
+                                                <constraint firstAttribute="bottom" secondItem="qkI-4o-bmr" secondAttribute="bottom" id="Hhy-Nq-4wt"/>
+                                                <constraint firstItem="Dl5-KK-wEK" firstAttribute="centerY" secondItem="kP9-NO-u1c" secondAttribute="centerY" id="dWo-FT-vFU"/>
+                                                <constraint firstAttribute="trailing" secondItem="qkI-4o-bmr" secondAttribute="trailing" constant="5" id="rk7-Eb-wjt"/>
+                                                <constraint firstItem="qkI-4o-bmr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Dl5-KK-wEK" secondAttribute="trailing" constant="5" id="rwD-fw-cIF"/>
+                                                <constraint firstItem="qkI-4o-bmr" firstAttribute="top" secondItem="kP9-NO-u1c" secondAttribute="top" id="sR1-Ye-ZnE"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="Dl5-KK-wEK" id="GCz-Nj-sr7"/>
+                                            <outlet property="valueTextField" destination="qkI-4o-bmr" id="uIT-cN-IdV"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="nEi-l3-er8" firstAttribute="bottom" secondItem="HTg-Ej-y57" secondAttribute="bottom" id="3tM-Dz-Pba"/>
+                            <constraint firstItem="HTg-Ej-y57" firstAttribute="leading" secondItem="nEi-l3-er8" secondAttribute="leading" id="47L-zN-TXI"/>
+                            <constraint firstItem="HTg-Ej-y57" firstAttribute="top" secondItem="nEi-l3-er8" secondAttribute="top" id="Mmc-FK-CY6"/>
+                            <constraint firstItem="nEi-l3-er8" firstAttribute="trailing" secondItem="HTg-Ej-y57" secondAttribute="trailing" id="ZIU-z3-0cG"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="nEi-l3-er8"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Units" largeTitleDisplayMode="never" id="qxG-gJ-Rop"/>
+                    <connections>
+                        <outlet property="unitsTableView" destination="HTg-Ej-y57" id="ATY-i2-I1F"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I6c-HQ-Cgm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1946.25" y="125.70422535211267"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="efS-vu-1Aq">

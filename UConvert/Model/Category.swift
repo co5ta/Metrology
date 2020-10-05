@@ -8,20 +8,19 @@
 
 import Foundation
 
+/// Enum of units categories
 enum Category: String, CaseIterable {
+    
+    // Cases
     case Length
     case Mass
     
+    /// Units available in a category
     var units: [Unit] {
         switch self {
+        // Base units must take the first place at each array
         case .Length: return [UnitLength.meters, UnitLength.miles, UnitLength.feet, UnitLength.inches]
-        case .Mass: return [UnitMass.pounds, UnitMass.grams, UnitMass.shortTons, UnitMass.ounces]
+        case .Mass: return [UnitMass.kilograms, UnitMass.pounds, UnitMass.shortTons, UnitMass.ounces]
         }
     }
-    
-    static var formatter: MeasurementFormatter = {
-        let formatter = MeasurementFormatter()
-        formatter.unitStyle = .long
-        return formatter
-    }()
 }

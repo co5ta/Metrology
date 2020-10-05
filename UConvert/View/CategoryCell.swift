@@ -8,21 +8,30 @@
 
 import UIKit
 
+/// Cell of a category
 class CategoryCell: UICollectionViewCell {
+    
+    /// Image of a category
     @IBOutlet weak var imageView: UIImageView!
+    
+    /// Title of a category
     @IBOutlet weak var titleLabel: UILabel!
+    
+    /// Description of a category
     @IBOutlet weak var descriptionLabel: UILabel!
+    
+    /// Category to display
     var category: CategoryViewModel? {
         didSet { configure() }
     }
     
+    /// Initialization
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         layer.cornerRadius = 10
     }
-}
-
-extension CategoryCell {
+    
+    /// Configures the cell with data
     private func configure() {
         guard let category = category else { return }
         titleLabel.text = category.title

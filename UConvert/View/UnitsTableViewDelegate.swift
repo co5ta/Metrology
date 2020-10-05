@@ -9,33 +9,45 @@
 import Foundation
 import UIKit
 
+/// Delegate of the units table view
 class UnitsTableViewDelegate: NSObject {
+    
+    /// View controller containing the table view
     var viewController: UnitsViewController? {
         didSet { bind() }
     }
-    var units: [Unit] = [] {
+    
+    /// Units to display
+    var units: [UnitViewModel] = [] {
         didSet { update() }
     }
     
-    init(category: CategoryViewModel) {
-        units = category.units
+    /// Initialization
+    init(units: [UnitViewModel]) {
+        self.units = units
     }
     
+    /// Links the delegate to the table view
     private func bind() {
         viewController?.unitsTableView.dataSource = self
         viewController?.unitsTableView.delegate = self
     }
     
+    /// Updates the table view
     private func update() {
         viewController?.unitsTableView.reloadData()
     }
 }
 
+// MARK: - UITableViewDataSource
 extension UnitsTableViewDelegate: UITableViewDataSource {
+    
+    /// Tells the data source to return the number of rows in a given section of a table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return units.count
     }
     
+    /// Asks the data source for a cell to insert in a particular location of the table view
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "UnitCell", for: indexPath) as? UnitCell
             else { return UnitCell() }
@@ -44,4 +56,5 @@ extension UnitsTableViewDelegate: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension UnitsTableViewDelegate: UITableViewDelegate {}

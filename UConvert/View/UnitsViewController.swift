@@ -8,12 +8,19 @@
 
 import UIKit
 
+/// View controller of the units screen
 class UnitsViewController: UIViewController {
 
-    var category: CategoryViewModel!
+    /// Units table view
     @IBOutlet weak var unitsTableView: UITableView!
-    lazy var unitsTableViewDelegate = UnitsTableViewDelegate(category: category)
     
+    /// Category of units
+    var category: CategoryViewModel!
+    
+    /// Delegate of the units table view
+    lazy var unitsTableViewDelegate = UnitsTableViewDelegate(units: category.units)
+    
+    /// Initialization
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = category.title

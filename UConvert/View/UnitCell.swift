@@ -8,16 +8,24 @@
 
 import UIKit
 
+/// Cell of a unit
 class UnitCell: UITableViewCell {
+    
+    /// Title of a unit
     @IBOutlet weak var titleLabel: UILabel!
+    
+    /// Value of a unit
     @IBOutlet weak var valueTextField: UITextField!
-    var unit: Unit? {
+    
+    /// Unit to display
+    var unit: UnitViewModel? {
         didSet { configure() }
     }
     
+    /// Configures the cell with data
     private func configure() {
         guard let unit = unit else { return }
-        titleLabel.text = Category.formatter.string(from: unit).capitalized
-//        valueTextField.text = "0"
+        titleLabel.text = unit.title
+        valueTextField.text = "\(unit.value)"
     }
 }

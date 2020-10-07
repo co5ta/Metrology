@@ -26,6 +26,21 @@ class UnitCell: UITableViewCell {
     private func configure() {
         guard let unit = unit else { return }
         titleLabel.text = unit.title
-        valueTextField.text = "\(unit.value)"
+        valueTextField.text = unit.value
+        unit.bindValue = {
+            self.valueTextField.text = unit.value
+        }
+    }
+    
+    /// Sends a notification to indicate the a value has changed
+    @IBAction func valueTextFieldChanged(_ sender: UITextField) {
+        guard let unit = unit,
+            let textChanged = valueTextField.text,
+            textChanged.last != "."
+            else { return }
+        unit.textChanged = textChanged.isEmpty ? "0" : textChanged
+        let name = Notification.Name(rawValue: "ValueChanged")
+        let unitChanged = ["unitChanged": unit]
+        NotificationCenter.default.post(name: name, object: nil, userInfo: unitChanged)
     }
 }

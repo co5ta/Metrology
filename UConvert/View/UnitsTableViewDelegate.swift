@@ -18,13 +18,14 @@ class UnitsTableViewDelegate: NSObject {
     }
     
     /// Units to display
-    var units: [UnitViewModel] = [] {
-        didSet { update() }
-    }
+    var units: [UnitViewModel] = []
     
     /// Initialization
     init(units: [UnitViewModel]) {
+        super.init()
         self.units = units
+        let name = Notification.Name("ValueChanged")
+        NotificationCenter.default.addObserver(self, selector: #selector(update(notification:)), name: name, object: nil)
     }
     
     /// Links the delegate to the table view
@@ -34,8 +35,16 @@ class UnitsTableViewDelegate: NSObject {
     }
     
     /// Updates the table view
-    private func update() {
-        viewController?.unitsTableView.reloadData()
+    @objc
+    private func update(notification: Notification) {
+//        guard let baseUnitValue = notification.userInfo?["baseUnitValue"] as? Double else { return }
+        guard let unit = notification.userInfo?["unitChanged"] as? UnitViewModel,
+            let value = Double(unit.textChanged)
+            else { return }
+        for index in 0..<units.count {
+            guard units[index].unit != unit.unit else { continue }
+            units[index].baseUnitValue = unit.unit.converter.baseUnitValue(fromValue: value)
+        }
     }
 }
 

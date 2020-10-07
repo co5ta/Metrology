@@ -133,6 +133,9 @@
                                                     <rect key="frame" x="71" y="25" width="234" height="22.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                                    <connections>
+                                                        <action selector="valueTextFieldChanged:" destination="sGH-MK-8FB" eventType="editingChanged" id="Bdi-Ro-4TT"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>

@@ -14,6 +14,11 @@ class UnitViewModel {
     /// Unit to manage
     var unit: Dimension
     
+    /// Initialization
+    init(unit: Dimension) {
+        self.unit = unit
+    }
+    
     /// Title of the unit
     var title: String {
         Self.formatter.string(from: unit).capitalized
@@ -34,11 +39,6 @@ class UnitViewModel {
     /// Value of the base unit to calculate all others values
     var baseUnitValue: Double = 1 {
         didSet { bindValue?() }
-    }
-    
-    /// Initialization
-    init(unit: Dimension) {
-        self.unit = unit
     }
     
     /// Display formatter of the unit

@@ -9,10 +9,15 @@
 import Foundation
 
 /// View model of a category
-struct CategoryViewModel {
+class CategoryViewModel {
     
     /// Category to manage
     private var category: Category
+    
+    /// Initialization
+    init(category: Category) {
+        self.category = category
+    }
     
     /// Title of the category
     var title: String {

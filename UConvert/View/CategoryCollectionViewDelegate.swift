@@ -14,7 +14,7 @@ class CategoryCollectionViewDelegate: NSObject {
     
     /// View controller containing the collection view
     var viewController: CategoryViewController? {
-        didSet { bind() }
+        didSet { configure() }
     }
     
     /// Categories to display
@@ -22,19 +22,26 @@ class CategoryCollectionViewDelegate: NSObject {
         didSet { update() }
     }
     
+    /// Spacing between collection view cells
+    private let spacing: CGFloat = 15
+    
+    /// Number of items by line
+    private var itemByLine: CGFloat = 1
+    
     /// Initialization
     init(categories: [CategoryViewModel]) {
         self.categories = categories
     }
     
-    /// Links the delegate to the collection view
-    private func bind() {
-        guard let viewController = viewController else { return }
-        viewController.categoryCollectionView.dataSource = self
-        viewController.categoryCollectionView.delegate = self
+    /// Configures the collection view
+    private func configure() {
+        guard let categoryCollectionView = viewController?.categoryCollectionView else { return }
+        categoryCollectionView.dataSource = self
+        categoryCollectionView.delegate = self
+        categoryCollectionView.contentInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
     }
     
-    /// Update the collection view
+    /// Updates the collection view
     private func update() {
         viewController?.categoryCollectionView.reloadData()
     }
@@ -64,8 +71,27 @@ extension CategoryCollectionViewDelegate: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.width - 15) / 2
-        return CGSize(width: width, height: width * 0.65)
+        var width, height: CGFloat
+        switch(collectionView.traitCollection.horizontalSizeClass, collectionView.traitCollection.verticalSizeClass) {
+        case (.regular, .regular):
+            itemByLine = 4
+            width = (collectionView.frame.width - (spacing*5)) / itemByLine
+            height = width * 0.5
+        case (.regular, .compact), (.compact, .compact):
+            width = (collectionView.frame.width - (spacing*4)) / 3
+            height = width * 0.5
+        default:
+            width = (collectionView.frame.width - (spacing*3)) / 2
+            height = width * 0.75
+        }
+        return CGSize(width: width, height: height)
+    }
+    
+    /// Asks the delegate for the spacing between successive rows or columns of a section
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return spacing
     }
 }
 

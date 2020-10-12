@@ -23,6 +23,11 @@ class CategoryViewController: UIViewController {
         categoryCollectionViewDelegate.viewController = self
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        categoryCollectionView.collectionViewLayout.invalidateLayout()
+    }
+    
     /// Prepares the transition to next screen
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let vc = segue.destination as? UnitsViewController,

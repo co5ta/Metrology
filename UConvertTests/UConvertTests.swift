@@ -15,7 +15,7 @@ class UConvertTests: XCTestCase {
         let categoryVM = CategoryViewModel(category: Category.Length)
         XCTAssertEqual(categoryVM.title, "Length")
         XCTAssertEqual(categoryVM.imageName, categoryVM.title)
-        XCTAssertEqual(categoryVM.description, "Meters, Miles, Feet, Inches")
+        XCTAssertEqual(categoryVM.description, "Meters, Feet, Inches, Yards, Miles, Mile-Scandinavian, Light Years, Fathoms, Furlongs, Astronomical Units, Parsecs")
     }
 
     func testUnitViewModelPropertiesContainedInCategory() {

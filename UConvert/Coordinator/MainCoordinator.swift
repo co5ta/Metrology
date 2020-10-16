@@ -28,20 +28,14 @@ class MainCoordinator: Coordinator {
     
     /// Shows the categories screen
     func showCategories() {
-        guard let categoriesVC = UIStoryboard(name: "Main", bundle: Bundle.main)
-            .instantiateViewController(identifier: "CategoryViewController")
-            as? CategoryViewController
-            else { return }
+        guard let categoriesVC = CategoryViewController.instantiate() else { return }
         categoriesVC.coordinator = self
         navigationController.pushViewController(categoriesVC, animated: true)
     }
     
     /// Shows the units screen
     func showUnits(of category: CategoryViewModel) {
-        guard let unitsVC = UIStoryboard(name: "Main", bundle: nil)
-            .instantiateViewController(identifier: "UnitsViewController")
-            as? UnitsViewController
-            else { return }
+        guard let unitsVC = UnitsViewController.instantiate() else { return }
         unitsVC.coordinator = self
         unitsVC.category = category
         navigationController.pushViewController(unitsVC, animated: true)

@@ -13,7 +13,7 @@ import UIKit
 class CategoryCollectionViewDelegate: NSObject {
     
     /// View controller containing the collection view
-    var viewController: CategoryViewController? {
+    weak var viewController: CategoryViewController? {
         didSet { configure() }
     }
     

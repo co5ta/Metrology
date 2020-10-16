@@ -13,7 +13,7 @@ import UIKit
 class UnitsTableViewDelegate: NSObject {
     
     /// View controller containing the table view
-    var viewController: UnitsViewController? {
+    weak var viewController: UnitsViewController? {
         didSet { bind() }
     }
     
@@ -37,7 +37,6 @@ class UnitsTableViewDelegate: NSObject {
     /// Updates the table view
     @objc
     private func update(notification: Notification) {
-//        guard let baseUnitValue = notification.userInfo?["baseUnitValue"] as? Double else { return }
         guard let unit = notification.userInfo?["unitChanged"] as? UnitViewModel,
             let value = Double(unit.textChanged)
             else { return }

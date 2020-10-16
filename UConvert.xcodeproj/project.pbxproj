@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2207831725378F7A00C3B92D /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2207831625378F7A00C3B92D /* Coordinator.swift */; };
+		2207831925378FAB00C3B92D /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2207831825378FAB00C3B92D /* MainCoordinator.swift */; };
 		2247E7AC2525D9B2000E3014 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247E7AB2525D9B2000E3014 /* CategoryViewModel.swift */; };
 		2247E7AE2525EBF5000E3014 /* UnitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247E7AD2525EBF5000E3014 /* UnitsViewController.swift */; };
 		224D71B625227FD200D00889 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224D71B525227FD200D00889 /* CategoryCell.swift */; };
@@ -36,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2207831625378F7A00C3B92D /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		2207831825378FAB00C3B92D /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		2247E7AB2525D9B2000E3014 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		2247E7AD2525EBF5000E3014 /* UnitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitsViewController.swift; sourceTree = "<group>"; };
 		224D71B525227FD200D00889 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
@@ -76,6 +80,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2207831525378F4800C3B92D /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				2207831625378F7A00C3B92D /* Coordinator.swift */,
+				2207831825378FAB00C3B92D /* MainCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		2247E7AA2525D98B000E3014 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +143,7 @@
 		225504392520C8D800BC6590 /* UConvert */ = {
 			isa = PBXGroup;
 			children = (
+				2207831525378F4800C3B92D /* Coordinator */,
 				225504512520F61200BC6590 /* Model */,
 				2247E7AA2525D98B000E3014 /* ViewModel */,
 				224D71B42522247600D00889 /* View */,
@@ -270,12 +284,14 @@
 			files = (
 				2247E7AC2525D9B2000E3014 /* CategoryViewModel.swift in Sources */,
 				2255043F2520C8D800BC6590 /* CategoryViewController.swift in Sources */,
+				2207831925378FAB00C3B92D /* MainCoordinator.swift in Sources */,
 				224D71B625227FD200D00889 /* CategoryCell.swift in Sources */,
 				2255043B2520C8D800BC6590 /* AppDelegate.swift in Sources */,
 				2255043D2520C8D800BC6590 /* SceneDelegate.swift in Sources */,
 				225274842523242D003F3C59 /* CategoryCollectionViewDelegate.swift in Sources */,
 				2255044F2520D31F00BC6590 /* Category.swift in Sources */,
 				2247E7AE2525EBF5000E3014 /* UnitsViewController.swift in Sources */,
+				2207831725378F7A00C3B92D /* Coordinator.swift in Sources */,
 				2267829D2527ADB300131A41 /* UnitsTableViewDelegate.swift in Sources */,
 				225355CD2529B76A00048DC3 /* UnitCell.swift in Sources */,
 				225355CF2529F7DC00048DC3 /* UnitViewModel.swift in Sources */,

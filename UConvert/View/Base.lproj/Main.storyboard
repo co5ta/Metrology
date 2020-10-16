@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Uf8-g8-4Uu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -11,13 +11,13 @@
         <!--Categories-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="CategoryViewController" customModule="UConvert" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CategoryViewController" id="BYZ-38-t0r" customClass="CategoryViewController" customModule="UConvert" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="g7L-BD-S1w">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qcX-xN-rHP">
                                     <size key="itemSize" width="169" height="110"/>
@@ -80,7 +80,6 @@
                                             <outlet property="descriptionLabel" destination="5Mw-ao-3ac" id="edJ-pC-LEF"/>
                                             <outlet property="imageView" destination="smp-7Y-ayi" id="gHM-a1-QP6"/>
                                             <outlet property="titleLabel" destination="oLQ-xa-A6K" id="1Qc-l1-8iv"/>
-                                            <segue destination="f6t-Ot-zAt" kind="show" id="ZRW-ir-YBY"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -107,13 +106,13 @@
         <!--Units-->
         <scene sceneID="BuS-uJ-8tI">
             <objects>
-                <viewController id="f6t-Ot-zAt" customClass="UnitsViewController" customModule="UConvert" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UnitsViewController" id="f6t-Ot-zAt" customClass="UnitsViewController" customModule="UConvert" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dVg-xF-xuc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HTg-Ej-y57">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UnitCell" id="sGH-MK-8FB" userLabel="UnitCell" customClass="UnitCell" customModule="UConvert" customModuleProvider="target">
@@ -157,14 +156,14 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="nEi-l3-er8" firstAttribute="bottom" secondItem="HTg-Ej-y57" secondAttribute="bottom" id="3tM-Dz-Pba"/>
+                            <constraint firstAttribute="bottom" secondItem="HTg-Ej-y57" secondAttribute="bottom" id="3tM-Dz-Pba"/>
                             <constraint firstItem="HTg-Ej-y57" firstAttribute="leading" secondItem="nEi-l3-er8" secondAttribute="leading" id="47L-zN-TXI"/>
                             <constraint firstItem="HTg-Ej-y57" firstAttribute="top" secondItem="nEi-l3-er8" secondAttribute="top" id="Mmc-FK-CY6"/>
                             <constraint firstItem="nEi-l3-er8" firstAttribute="trailing" secondItem="HTg-Ej-y57" secondAttribute="trailing" id="ZIU-z3-0cG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nEi-l3-er8"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Units" largeTitleDisplayMode="never" id="qxG-gJ-Rop"/>
+                    <navigationItem key="navigationItem" title="Units" largeTitleDisplayMode="always" id="qxG-gJ-Rop"/>
                     <connections>
                         <outlet property="unitsTableView" destination="HTg-Ej-y57" id="ATY-i2-I1F"/>
                     </connections>
@@ -172,24 +171,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I6c-HQ-Cgm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1946.25" y="125.70422535211267"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="efS-vu-1Aq">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Uf8-g8-4Uu" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Did-dV-ddV">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="chZ-ui-o3G"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oA3-Ep-HaJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="126.5625"/>
         </scene>
     </scenes>
     <resources>

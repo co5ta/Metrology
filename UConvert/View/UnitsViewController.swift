@@ -20,10 +20,14 @@ class UnitsViewController: UIViewController {
     /// Delegate of the units table view
     lazy var unitsTableViewDelegate = UnitsTableViewDelegate(units: category.units)
     
+    /// Coordinator
+    weak var coordinator: MainCoordinator?
+    
     /// Initialization
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = category.title
+        navigationItem.largeTitleDisplayMode = .never
         unitsTableViewDelegate.viewController = self
     }
 }

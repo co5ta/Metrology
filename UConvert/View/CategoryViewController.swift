@@ -17,22 +17,18 @@ class CategoryViewController: UIViewController {
     /// Delegate of the categories collection view
     let categoryCollectionViewDelegate = CategoryCollectionViewDelegate(categories: CategoryViewModel.all)
     
+    /// Coordinator
+    weak var coordinator: MainCoordinator?
+    
     /// First operations after loading
     override func viewDidLoad() {
         super.viewDidLoad()
         categoryCollectionViewDelegate.viewController = self
     }
     
+    /// Activates the reconstruction of the category collection view
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         categoryCollectionView.collectionViewLayout.invalidateLayout()
-    }
-    
-    /// Prepares the transition to next screen
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let vc = segue.destination as? UnitsViewController,
-            let cell = sender as? CategoryCell
-            else { return }
-        vc.category = cell.category
     }
 }

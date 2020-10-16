@@ -93,6 +93,13 @@ extension CategoryCollectionViewDelegate: UICollectionViewDelegateFlowLayout {
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return spacing
     }
+    
+    /// Goes to the units screen when a category is selected
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CategoryCell,
+            let category = cell.category else { return }
+        viewController?.coordinator?.showUnits(of: category)
+    }
 }
 
 // MARK: - UICollectionViewDelegate

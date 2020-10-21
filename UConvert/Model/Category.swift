@@ -19,6 +19,25 @@ enum Category: String, CaseIterable {
     case ElectricCharge
     case FuelEfficiency
     
+    var title: String {
+        switch self {
+        case .Length: return Strings.length
+        case .Area: return Strings.area
+        case .Volume: return Strings.volume
+        case .Angle: return Strings.angle
+        case .Mass: return Strings.mass
+        case .Pressure: return Strings.pressure
+        case .Acceleration: return Strings.acceleration
+        case .Duration: return Strings.duration
+        case .Speed: return Strings.speed
+        case .Energy: return Strings.energy
+        case .Power: return Strings.power
+        case .Temperature: return Strings.temperature
+        case .ElectricCharge: return Strings.electricCharge
+        case .FuelEfficiency: return Strings.fuelEfficiency
+        }
+    }
+    
     /// Units available in a category
     var units: [Unit] {
         switch self {
@@ -127,9 +146,9 @@ enum Category: String, CaseIterable {
                 UnitElectricCharge.ampereHours
             ]
         case .FuelEfficiency: return [
-            UnitFuelEfficiency.litersPer100Kilometers,
-            UnitFuelEfficiency.milesPerGallon,
-            UnitFuelEfficiency.milesPerImperialGallon,
+                UnitFuelEfficiency.litersPer100Kilometers,
+                UnitFuelEfficiency.milesPerGallon,
+                UnitFuelEfficiency.milesPerImperialGallon,
             ]
         }
     }

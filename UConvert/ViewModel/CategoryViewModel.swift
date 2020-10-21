@@ -21,7 +21,7 @@ class CategoryViewModel {
     
     /// Title of the category
     var title: String {
-        category.rawValue
+        category.title
     }
     
     /// Image name of the category

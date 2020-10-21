@@ -1,0 +1,18 @@
+
+/* Class = "UILabel"; text = "Meter, Mile, Feet, Inch"; ObjectID = "5Mw-ao-3ac"; */
+"5Mw-ao-3ac.text" = "Meter, Mile, Feet, Inch";
+
+/* Class = "UILabel"; text = "Meters"; ObjectID = "Dl5-KK-wEK"; */
+"Dl5-KK-wEK.text" = "Meters";
+
+/* Class = "UINavigationItem"; title = "Categories"; ObjectID = "TDG-i5-jaa"; */
+"TDG-i5-jaa.title" = "Categories";
+
+/* Class = "UILabel"; text = "Length"; ObjectID = "oLQ-xa-A6K"; */
+"oLQ-xa-A6K.text" = "Length";
+
+/* Class = "UITextField"; placeholder = "0"; ObjectID = "qkI-4o-bmr"; */
+"qkI-4o-bmr.placeholder" = "0";
+
+/* Class = "UINavigationItem"; title = "Units"; ObjectID = "qxG-gJ-Rop"; */
+"qxG-gJ-Rop.title" = "Units";

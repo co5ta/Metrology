@@ -24,26 +24,12 @@ class UnitsTableViewDelegate: NSObject {
     init(units: [UnitViewModel]) {
         super.init()
         self.units = units
-        let name = Notification.Name("ValueChanged")
-        NotificationCenter.default.addObserver(self, selector: #selector(update(notification:)), name: name, object: nil)
     }
     
     /// Links the delegate to the table view
     private func bind() {
         viewController?.unitsTableView.dataSource = self
         viewController?.unitsTableView.delegate = self
-    }
-    
-    /// Updates the table view
-    @objc
-    private func update(notification: Notification) {
-        guard let unit = notification.userInfo?["unitChanged"] as? UnitViewModel,
-            let value = Double(unit.textChanged)
-            else { return }
-        for index in 0..<units.count {
-            guard units[index].unit != unit.unit else { continue }
-            units[index].baseUnitValue = unit.unit.converter.baseUnitValue(fromValue: value)
-        }
     }
 }
 

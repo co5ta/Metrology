@@ -27,7 +27,7 @@ class UnitViewModel {
     /// Value of the unit
     var value: String {
         let value = unit.converter.value(fromBaseUnitValue: baseUnitValue)
-        return ceil(value) == value ? String(format: "%g", value) : "\(value)"
+        return String(format: "%g", value)
     }
     
     /// Code to execute when the base unit value changed

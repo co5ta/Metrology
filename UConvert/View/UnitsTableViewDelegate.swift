@@ -60,9 +60,38 @@ extension UnitsTableViewDelegate: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "UnitCell", for: indexPath) as? UnitCell
             else { return UnitCell() }
         cell.unit = units[indexPath.row]
+        cell.valueTextField.delegate = self
+        cell.backgroundColor = indexPath.row % 2 == 0 ? .systemBackground : .secondarySystemBackground
         return cell
     }
 }
 
 // MARK: - UITableViewDelegate
-extension UnitsTableViewDelegate: UITableViewDelegate {}
+extension UnitsTableViewDelegate: UITableViewDelegate {
+    
+    /// Selects the value text field when a cell is selected
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? UnitCell else { return }
+        cell.valueTextField.becomeFirstResponder()
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension UnitsTableViewDelegate: UITextFieldDelegate {
+    
+    /// Selects the cell when a value text field is selected
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        guard let contentView = textField.superview,
+            let cell = contentView.superview as? UnitCell
+            else { return }
+        cell.isSelected = true
+    }
+    
+    /// Forces the cell deselection
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let contentView = textField.superview,
+            let cell = contentView.superview as? UnitCell
+            else { return }
+        cell.isSelected = false
+    }
+}

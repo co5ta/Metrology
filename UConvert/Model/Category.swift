@@ -21,25 +21,39 @@ enum Category: String, CaseIterable {
     
     var title: String {
         switch self {
-        case .Length: return Strings.length
-        case .Area: return Strings.area
-        case .Volume: return Strings.volume
-        case .Angle: return Strings.angle
-        case .Mass: return Strings.mass
-        case .Pressure: return Strings.pressure
-        case .Acceleration: return Strings.acceleration
-        case .Duration: return Strings.duration
-        case .Speed: return Strings.speed
-        case .Energy: return Strings.energy
-        case .Power: return Strings.power
-        case .Temperature: return Strings.temperature
-        case .ElectricCharge: return Strings.electricCharge
-        case .FuelEfficiency: return Strings.fuelEfficiency
+        case .Length:
+            return Strings.length
+        case .Area:
+            return Strings.area
+        case .Volume:
+            return Strings.volume
+        case .Angle:
+            return Strings.angle
+        case .Mass:
+            return Strings.mass
+        case .Pressure:
+            return Strings.pressure
+        case .Acceleration:
+            return Strings.acceleration
+        case .Duration:
+            return Strings.duration
+        case .Speed:
+            return Strings.speed
+        case .Energy:
+            return Strings.energy
+        case .Power:
+            return Strings.power
+        case .Temperature:
+            return Strings.temperature
+        case .ElectricCharge:
+            return Strings.electricCharge
+        case .FuelEfficiency:
+            return Strings.fuelEfficiency
         }
     }
     
     /// Units available in a category
-    var units: [Unit] {
+    var units: [Dimension] {
         switch self {
         // Base units must take the first place at each array
         case .Length: return [

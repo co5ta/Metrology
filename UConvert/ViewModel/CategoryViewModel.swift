@@ -38,7 +38,7 @@ class CategoryViewModel {
     
     /// All units of the category
     var units: [UnitViewModel] {
-        category.units.map { UnitViewModel(unit: $0 as! Dimension) }
+        category.units.map { UnitViewModel(unit: $0) }
     }
     
     /// All  categories

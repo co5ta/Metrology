@@ -58,6 +58,7 @@ extension UnitsTableViewDelegate: UITableViewDelegate {
     /// Selects the value text field when a cell is selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? UnitCell else { return }
+        cell.valueTextField.isUserInteractionEnabled = true
         cell.valueTextField.becomeFirstResponder()
     }
 }
@@ -65,19 +66,8 @@ extension UnitsTableViewDelegate: UITableViewDelegate {
 // MARK: - UITextFieldDelegate
 extension UnitsTableViewDelegate: UITextFieldDelegate {
     
-    /// Selects the cell when a value text field is selected
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        guard let contentView = textField.superview,
-            let cell = contentView.superview as? UnitCell
-            else { return }
-        cell.isSelected = true
-    }
-    
     /// Forces the cell deselection
     func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let contentView = textField.superview,
-            let cell = contentView.superview as? UnitCell
-            else { return }
-        cell.isSelected = false
+        textField.isUserInteractionEnabled = false
     }
 }

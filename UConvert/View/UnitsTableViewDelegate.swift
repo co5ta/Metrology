@@ -18,12 +18,12 @@ class UnitsTableViewDelegate: NSObject {
     }
     
     /// Units to display
-    var units: [UnitViewModel] = []
+    var dimensionVMs: [DimensionViewModel] = []
     
     /// Initialization
-    init(units: [UnitViewModel]) {
+    init(dimensionVMs: [DimensionViewModel]) {
         super.init()
-        self.units = units
+        self.dimensionVMs = dimensionVMs
     }
     
     /// Links the delegate to the table view
@@ -38,14 +38,14 @@ extension UnitsTableViewDelegate: UITableViewDataSource {
     
     /// Tells the data source to return the number of rows in a given section of a table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return units.count
+        return dimensionVMs.count
     }
     
     /// Asks the data source for a cell to insert in a particular location of the table view
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "UnitCell", for: indexPath) as? UnitCell
         else { return UnitCell() }
-        cell.unit = units[indexPath.row]
+        cell.dimensionVM = dimensionVMs[indexPath.row]
         cell.valueTextField.delegate = self
         cell.backgroundColor = indexPath.row % 2 == 0 ? .systemBackground : .secondarySystemBackground
         toggleAccessoryType(in: cell)
@@ -54,15 +54,14 @@ extension UnitsTableViewDelegate: UITableViewDataSource {
     
     /// Adds an accessory type in the cell if necessary
     func toggleAccessoryType(in cell: UnitCell) {
-        guard let viewController = viewController, let unit = cell.unit else { return }
+        guard let viewController = viewController, let dimensionVM = cell.dimensionVM else { return }
         if viewController.mode == .normal {
-            cell.accessoryType = (Category.getVariations(of: unit.unit) != nil) ? .detailButton : .none
-            cell.variation = unit
-            guard let variationSelected = Storage.getVariationSelected(for: unit.unit) else { return }
-            print(variationSelected, unit.unit.symbol)
-            cell.unit = UnitViewModel(unit: variationSelected, baseUnitValue: unit.baseUnitValue)
+            cell.accessoryType = (Category.getVariations(of: dimensionVM.dimension) != nil) ? .detailButton : .none
+            cell.baseVariation = dimensionVM
+            guard let variationSelected = Storage.getVariationSelected(for: dimensionVM.dimension) else { return }
+            cell.dimensionVM = DimensionViewModel(dimension: variationSelected, baseUnitValue: dimensionVM.baseUnitValue)
         } else {
-            cell.accessoryType = viewController.variationSelected == unit.unit ? .checkmark : .none
+            cell.accessoryType = viewController.variationSelected == dimensionVM.dimension ? .checkmark : .none
         }
     }
     
@@ -78,9 +77,9 @@ extension UnitsTableViewDelegate: UITableViewDataSource {
     
     /// Tells the data source to move a row at a specific location in the table view to another location
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let unitMoved = units[sourceIndexPath.row]
-        units.remove(at: sourceIndexPath.row)
-        units.insert(unitMoved, at: destinationIndexPath.row)
+        let unitMoved = dimensionVMs[sourceIndexPath.row]
+        dimensionVMs.remove(at: sourceIndexPath.row)
+        dimensionVMs.insert(unitMoved, at: destinationIndexPath.row)
     }
 }
 
@@ -97,11 +96,11 @@ extension UnitsTableViewDelegate: UITableViewDelegate {
     /// Tells the delegate that the user tapped the detail button for the specified row
     func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? UnitCell,
-              let dimension = cell.unit,
-              let variation = cell.variation,
-              let variations = CategoryViewModel.getVariations(of: variation.unit, with: dimension.baseUnitValue)
+              let dimension = cell.dimensionVM,
+              let baseVariation = cell.baseVariation,
+              let variations = CategoryViewModel.getVariations(of: baseVariation.dimension, with: dimension.baseUnitValue)
         else { return }
-        viewController?.coordinator?.showVariations(of: variation, units: variations, previousScreen: viewController)
+        viewController?.coordinator?.showVariations(baseVariation: baseVariation, variations: variations, previousScreen: viewController)
     }
 }
 

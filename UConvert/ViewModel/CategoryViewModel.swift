@@ -31,21 +31,21 @@ class CategoryViewModel {
 
     /// Description of the category
     var description: String {
-        category.units.map {
-            UnitViewModel.formatter.string(from: $0).capitalized
+        category.dimensions.map {
+            DimensionViewModel.formatter.string(from: $0).capitalized
         }.joined(separator: ", ")
     }
     
     /// All units of the category
-    var units: [UnitViewModel] {
-        let units = Storage.getDimensions(of: category) ?? category.units
-        return units.map { UnitViewModel(unit: $0) }
+    var dimensionVMs: [DimensionViewModel] {
+        let units = Storage.getDimensions(of: category) ?? category.dimensions
+        return units.map { DimensionViewModel(dimension: $0) }
     }
     
     /// Fetchs variations of a dimension
-    static func getVariations(of dimension: Dimension, with baseUnitValue: Double) -> [UnitViewModel]? {
+    static func getVariations(of dimension: Dimension, with baseUnitValue: Double) -> [DimensionViewModel]? {
         guard let variations = Category.getVariations(of: dimension) else { return nil }
-        return variations.map { UnitViewModel(unit: $0, baseUnitValue: baseUnitValue) }
+        return variations.map { DimensionViewModel(dimension: $0, baseUnitValue: baseUnitValue) }
     }
     
     /// All  categories

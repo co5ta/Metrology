@@ -1,5 +1,5 @@
 //
-//  UnitViewModel.swift
+//  DimensionViewModel.swift
 //  UConvert
 //
 //  Created by co5ta on 04/10/2020.
@@ -9,25 +9,30 @@
 import Foundation
 
 /// View model of a unit
-class UnitViewModel {
+class DimensionViewModel {
 
     /// Unit to manage
-    var unit: Dimension
+    var dimension: Dimension
     
     /// Initialization
-    init(unit: Dimension, baseUnitValue: Double = 1) {
-        self.unit = unit
+    init(dimension: Dimension, baseUnitValue: Double = 1) {
+        self.dimension = dimension
         self.baseUnitValue = baseUnitValue
     }
     
     /// Title of the unit
     var title: String {
-        Self.formatter.string(from: unit).capitalized
+        Self.formatter.string(from: dimension).capitalized
     }
     
     /// Value of the unit
     var value: Double {
-        unit.converter.value(fromBaseUnitValue: baseUnitValue)
+        dimension.converter.value(fromBaseUnitValue: baseUnitValue)
+    }
+    
+    /// Rounded value of the unit
+    var textValue: String {
+        String(format: "%g", value)
     }
     
     /// Code to execute when the base unit value changed

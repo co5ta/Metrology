@@ -53,7 +53,7 @@ enum Category: String, CaseIterable {
     }
     
     /// Units available in a category
-    var units: [Dimension] {
+    var dimensions: [Dimension] {
         switch self {
         // Base units must take the first place at each array
         case .Length: return [

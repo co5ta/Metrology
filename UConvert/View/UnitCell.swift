@@ -18,35 +18,35 @@ class UnitCell: UITableViewCell {
     @IBOutlet weak var valueTextField: UITextField!
     
     /// Unit to display
-    var unit: UnitViewModel? {
+    var dimensionVM: DimensionViewModel? {
         didSet { configure() }
     }
     
-    var variation: UnitViewModel?
+    /// Base dimension of a variation
+    var baseVariation: DimensionViewModel?
     
     /// Configures the cell with data
     private func configure() {
-        guard let unit = unit else { return }
-        titleLabel.text = unit.title
-        valueTextField.text = String(format: "%g", unit.value)
-        unit.bindValue = {
-            let newValue = unit.value
+        guard let dimensionVM = dimensionVM else { return }
+        titleLabel.text = dimensionVM.title
+        valueTextField.text = dimensionVM.textValue
+        dimensionVM.bindValue = {
             guard let currentValue = Double(self.valueTextField.text ?? "0"),
-                  currentValue != newValue
+                  currentValue != dimensionVM.value
             else { return }
-            self.valueTextField.text = String(format: "%g", newValue)
+            self.valueTextField.text = dimensionVM.textValue
         }
     }
     
     /// Sends a notification to indicate the a value has changed
     @IBAction func valueTextFieldChanged(_ sender: UITextField) {
-        guard let unit = unit,
+        guard let dimensionVM = dimensionVM,
             let textChanged = valueTextField.text,
             textChanged.last != "."
         else { return }
-        unit.textChanged = textChanged.isEmpty ? "0" : textChanged
+        dimensionVM.textChanged = textChanged.isEmpty ? "0" : textChanged
         let name = Notification.Name(rawValue: "ValueChanged")
-        let unitChanged = ["unitChanged": unit]
+        let unitChanged = ["unitChanged": dimensionVM]
         NotificationCenter.default.post(name: name, object: nil, userInfo: unitChanged)
     }
 }

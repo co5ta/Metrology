@@ -14,14 +14,9 @@ class UnitsViewController: UIViewController {
     /// Table view of units
     @IBOutlet weak var unitsTableView: UITableView!
     
-    /// Category of units
-//    var categoryVM: CategoryViewModel!
-    var screenTitle: String = "" {
-        didSet { navigationItem.title = screenTitle }
-    }
-    
-    var units = [UnitViewModel]() {
-        didSet { unitsTableViewDelegate = UnitsTableViewDelegate(units: units) }
+    /// 
+    var dimensionVMs = [DimensionViewModel]() {
+        didSet { unitsTableViewDelegate = UnitsTableViewDelegate(dimensionVMs: dimensionVMs) }
     }
     
     /// Delegate of the units table view
@@ -48,8 +43,8 @@ extension UnitsViewController {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
         unitsTableViewDelegate?.viewController = self
-        addNotifications()
         addRightBarButton()
+        addNotifications()
     }
     
     /// Adds right bar button according to the view controller context
@@ -78,12 +73,13 @@ extension UnitsViewController {
     /// Updates the values in the table view
     @objc
     private func update(notification: Notification) {
-        guard let unit = notification.userInfo?["unitChanged"] as? UnitViewModel,
-            let value = Double(unit.textChanged),
-            let unitsTableViewDelegate = unitsTableViewDelegate
+        guard let dimensionVM = notification.userInfo?["unitChanged"] as? DimensionViewModel,
+              let newValue = Double(dimensionVM.textChanged),
+              let unitsTableViewDelegate = unitsTableViewDelegate
         else { return }
-        for index in 0..<unitsTableViewDelegate.units.count {
-            unitsTableViewDelegate.units[index].baseUnitValue = unit.unit.converter.baseUnitValue(fromValue: value)
+        for index in 0..<unitsTableViewDelegate.dimensionVMs.count {
+            let value = dimensionVM.dimension.converter.baseUnitValue(fromValue: newValue)
+            unitsTableViewDelegate.dimensionVMs[index].baseUnitValue = value
         }
     }
     
@@ -105,27 +101,20 @@ extension UnitsViewController {
         unitsTableView.isEditing.toggle()
     }
     
-    ///
+    /// Selects a variation
     @objc
     private func selectVariation() {
         guard let indexPath = unitsTableView.indexPathForSelectedRow,
               let cell = unitsTableView.cellForRow(at: indexPath) as? UnitCell,
               cell.accessoryType == .none,
               let dimension = mode.dimension,
-              let variationSelected = cell.unit?.unit
+              let variationSelected = cell.dimensionVM?.dimension
         else { return }
         self.variationSelected = variationSelected
         Storage.save(variationSelected: variationSelected, for: dimension)
-        
-//        unitsTableView.visibleCells.forEach { (cell) in
-//            unitsTableViewDelegate?.toggleAccessoryType(in: cell as! UnitCell)
-//        }
-        unitsTableView.reloadData()
+        unitsTableView.visibleCells.forEach { (cell) in
+            unitsTableViewDelegate?.toggleAccessoryType(in: cell as! UnitCell)
+        }
         previousScreen?.unitsTableView.reloadData()
-    }
-    
-    private func updateCell() {
-        guard let previousScreen = previousScreen else { return }
-        previousScreen.unitsTableView.reloadData()
     }
 }

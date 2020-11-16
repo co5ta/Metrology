@@ -37,20 +37,20 @@ class MainCoordinator: Coordinator {
     func showUnits(of categoryVM: CategoryViewModel) {
         guard let unitsVC = UnitsViewController.instantiate() else { return }
         unitsVC.coordinator = self
-        unitsVC.screenTitle = categoryVM.title
-        unitsVC.units = categoryVM.units
+        unitsVC.dimensionVMs = categoryVM.dimensionVMs
+        unitsVC.navigationItem.title = categoryVM.title
         navigationController.pushViewController(unitsVC, animated: true)
     }
     
     ///
-    func showVariations(of dimension: UnitViewModel, units: [UnitViewModel], previousScreen: UnitsViewController?) {
+    func showVariations(baseVariation: DimensionViewModel, variations: [DimensionViewModel], previousScreen: UnitsViewController?) {
         guard let unitsVC = UnitsViewController.instantiate() else { return }
         unitsVC.coordinator = self
-        unitsVC.screenTitle = dimension.title
-        unitsVC.units = units
-        unitsVC.mode = .variation(dimension: dimension.unit)
-        unitsVC.variationSelected = Storage.getVariationSelected(for: dimension.unit) ?? dimension.unit
+        unitsVC.dimensionVMs = variations
+        unitsVC.mode = .variation(dimension: baseVariation.dimension)
+        unitsVC.variationSelected = Storage.getVariationSelected(for: baseVariation.dimension) ?? baseVariation.dimension
         unitsVC.previousScreen = previousScreen
+        unitsVC.navigationItem.title = baseVariation.title
         navigationController.pushViewController(unitsVC, animated: true)
     }
 }

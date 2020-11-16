@@ -20,22 +20,22 @@ class UConvertTests: XCTestCase {
 
     func testUnitViewModelPropertiesContainedInCategory() {
         let categoryVM = CategoryViewModel(category: Category.Length)
-        let unitVM = categoryVM.units[0]
-        let unitLengthVM = UnitViewModel(unit: UnitLength.baseUnit())
-        XCTAssertEqual(unitVM.unit, unitLengthVM.unit)
-        XCTAssertEqual(unitVM.title, "Meters")
-        XCTAssertEqual(unitVM.value, "1")
-        XCTAssertEqual(unitVM.baseUnitValue, 1)
+        let dimensionVM = categoryVM.dimensionVMs[0]
+        let unitLengthVM = DimensionViewModel(dimension: UnitLength.baseUnit())
+        XCTAssertEqual(dimensionVM.dimension, unitLengthVM.dimension)
+        XCTAssertEqual(dimensionVM.title, "Meters")
+        XCTAssertEqual(dimensionVM.textValue, "1")
+        XCTAssertEqual(dimensionVM.baseUnitValue, 1)
     }
     
     func testWhenBaseUnitValueChangedUnitValueMustBeUpdated() {
         // Given
-        let unitVM = UnitViewModel(unit: UnitAngle.radians)
-        XCTAssertEqual(unitVM.value, "0.017453292519943295")
-        XCTAssertEqual(unitVM.baseUnitValue, 1)
+        let dimensionVM = DimensionViewModel(dimension: UnitAngle.radians)
+        XCTAssertEqual(dimensionVM.textValue, "0.017453292519943295")
+        XCTAssertEqual(dimensionVM.baseUnitValue, 1)
         // When
-        unitVM.baseUnitValue = 3
+        dimensionVM.baseUnitValue = 3
         // Then
-        XCTAssertEqual(unitVM.value, "0.05235987755982988")
+        XCTAssertEqual(dimensionVM.textValue, "0.05235987755982988")
     }
 }

@@ -35,7 +35,7 @@ struct Storage {
         let filePath = documentDirectory.appendingPathComponent(category.rawValue)
         do {
             let data = try Data(contentsOf: filePath)
-            let dimensions = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [Dimension]
+            let dimensions = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [Dimension]
             return dimensions
         } catch {
             print(#function, error.localizedDescription)
@@ -48,7 +48,6 @@ struct Storage {
         do {
             let data = try NSKeyedArchiver.archivedData(withRootObject: variationSelected, requiringSecureCoding: false)
             try data.write(to: filePath)
-            print("Saved \(variationSelected.symbol)", "for " + dimension.symbol)
         } catch {
             print(#function, error.localizedDescription)
         }
@@ -58,7 +57,7 @@ struct Storage {
         let filePath = documentDirectory.appendingPathComponent(dimension.symbol)
         do {
             let data = try Data(contentsOf: filePath)
-            let dimension = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? Dimension
+            let dimension = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? Dimension
             return dimension
         } catch {
             print(#function, error.localizedDescription)

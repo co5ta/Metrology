@@ -34,10 +34,23 @@ class MainCoordinator: Coordinator {
     }
     
     /// Shows the units screen
-    func showUnits(of category: CategoryViewModel) {
+    func showUnits(of categoryVM: CategoryViewModel) {
         guard let unitsVC = UnitsViewController.instantiate() else { return }
         unitsVC.coordinator = self
-        unitsVC.category = category
+        unitsVC.screenTitle = categoryVM.title
+        unitsVC.units = categoryVM.units
+        navigationController.pushViewController(unitsVC, animated: true)
+    }
+    
+    ///
+    func showVariations(of dimension: UnitViewModel, units: [UnitViewModel], previousScreen: UnitsViewController?) {
+        guard let unitsVC = UnitsViewController.instantiate() else { return }
+        unitsVC.coordinator = self
+        unitsVC.screenTitle = dimension.title
+        unitsVC.units = units
+        unitsVC.mode = .variation(dimension: dimension.unit)
+        unitsVC.variationSelected = Storage.getVariationSelected(for: dimension.unit) ?? dimension.unit
+        unitsVC.previousScreen = previousScreen
         navigationController.pushViewController(unitsVC, animated: true)
     }
 }

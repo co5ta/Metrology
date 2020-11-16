@@ -22,13 +22,19 @@ class UnitCell: UITableViewCell {
         didSet { configure() }
     }
     
+    var variation: UnitViewModel?
+    
     /// Configures the cell with data
     private func configure() {
         guard let unit = unit else { return }
         titleLabel.text = unit.title
-        valueTextField.text = unit.value
+        valueTextField.text = String(format: "%g", unit.value)
         unit.bindValue = {
-            self.valueTextField.text = unit.value
+            let newValue = unit.value
+            guard let currentValue = Double(self.valueTextField.text ?? "0"),
+                  currentValue != newValue
+            else { return }
+            self.valueTextField.text = String(format: "%g", newValue)
         }
     }
     
@@ -37,7 +43,7 @@ class UnitCell: UITableViewCell {
         guard let unit = unit,
             let textChanged = valueTextField.text,
             textChanged.last != "."
-            else { return }
+        else { return }
         unit.textChanged = textChanged.isEmpty ? "0" : textChanged
         let name = Notification.Name(rawValue: "ValueChanged")
         let unitChanged = ["unitChanged": unit]

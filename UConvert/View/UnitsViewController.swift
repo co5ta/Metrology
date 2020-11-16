@@ -11,25 +11,56 @@ import UIKit
 /// View controller of the units screen
 class UnitsViewController: UIViewController {
 
-    /// Units table view
+    /// Table view of units
     @IBOutlet weak var unitsTableView: UITableView!
     
     /// Category of units
-    var category: CategoryViewModel!
+//    var categoryVM: CategoryViewModel!
+    var screenTitle: String = "" {
+        didSet { navigationItem.title = screenTitle }
+    }
+    
+    var units = [UnitViewModel]() {
+        didSet { unitsTableViewDelegate = UnitsTableViewDelegate(units: units) }
+    }
     
     /// Delegate of the units table view
-    lazy var unitsTableViewDelegate = UnitsTableViewDelegate(units: category.units)
+    var unitsTableViewDelegate: UnitsTableViewDelegate?
     
     /// Coordinator
     weak var coordinator: MainCoordinator?
     
+    /// Context of the view controller
+    var mode = Mode.normal
+    
+    /// Variation selected
+    var variationSelected: Dimension?
+    
+    ///
+    var previousScreen: UnitsViewController?
+}
+
+// MARK: - Life cycle
+extension UnitsViewController {
+    
     /// Initialization
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = category.title
         navigationItem.largeTitleDisplayMode = .never
-        unitsTableViewDelegate.viewController = self
+        unitsTableViewDelegate?.viewController = self
         addNotifications()
+        addRightBarButton()
+    }
+    
+    /// Adds right bar button according to the view controller context
+    private func addRightBarButton() {
+        if mode == .normal {
+            let button = UIBarButtonItem(title: "Reorder", style: .plain, target: self, action: #selector(toggleEditMode))
+            navigationItem.rightBarButtonItem = button
+        } else {
+            let button = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(selectVariation))
+            navigationItem.rightBarButtonItem = button
+        }
     }
     
     /// Adds notifications
@@ -39,15 +70,19 @@ class UnitsViewController: UIViewController {
         let keyBoardWillShow = UIResponder.keyboardWillShowNotification
         NotificationCenter.default.addObserver(self, selector: #selector(resizeTableView(notification:)), name: keyBoardWillShow, object: nil)
     }
+}
+
+// MARK: - Actions
+extension UnitsViewController {
     
     /// Updates the values in the table view
     @objc
     private func update(notification: Notification) {
         guard let unit = notification.userInfo?["unitChanged"] as? UnitViewModel,
-            let value = Double(unit.textChanged)
-            else { return }
+            let value = Double(unit.textChanged),
+            let unitsTableViewDelegate = unitsTableViewDelegate
+        else { return }
         for index in 0..<unitsTableViewDelegate.units.count {
-            guard unitsTableViewDelegate.units[index].unit != unit.unit else { continue }
             unitsTableViewDelegate.units[index].baseUnitValue = unit.unit.converter.baseUnitValue(fromValue: value)
         }
     }
@@ -62,5 +97,35 @@ class UnitsViewController: UIViewController {
         guard let indexSelectedRow = unitsTableView.indexPathForSelectedRow else { return }
         unitsTableView.scrollIndicatorInsets = unitsTableView.contentInset
         unitsTableView.scrollToRow(at: indexSelectedRow, at: .none, animated: true)
+    }
+    
+    /// Toggles the table view edit mode
+    @objc
+    private func toggleEditMode() {
+        unitsTableView.isEditing.toggle()
+    }
+    
+    ///
+    @objc
+    private func selectVariation() {
+        guard let indexPath = unitsTableView.indexPathForSelectedRow,
+              let cell = unitsTableView.cellForRow(at: indexPath) as? UnitCell,
+              cell.accessoryType == .none,
+              let dimension = mode.dimension,
+              let variationSelected = cell.unit?.unit
+        else { return }
+        self.variationSelected = variationSelected
+        Storage.save(variationSelected: variationSelected, for: dimension)
+        
+//        unitsTableView.visibleCells.forEach { (cell) in
+//            unitsTableViewDelegate?.toggleAccessoryType(in: cell as! UnitCell)
+//        }
+        unitsTableView.reloadData()
+        previousScreen?.unitsTableView.reloadData()
+    }
+    
+    private func updateCell() {
+        guard let previousScreen = previousScreen else { return }
+        previousScreen.unitsTableView.reloadData()
     }
 }

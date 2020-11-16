@@ -44,11 +44,43 @@ extension UnitsTableViewDelegate: UITableViewDataSource {
     /// Asks the data source for a cell to insert in a particular location of the table view
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "UnitCell", for: indexPath) as? UnitCell
-            else { return UnitCell() }
+        else { return UnitCell() }
         cell.unit = units[indexPath.row]
         cell.valueTextField.delegate = self
         cell.backgroundColor = indexPath.row % 2 == 0 ? .systemBackground : .secondarySystemBackground
+        toggleAccessoryType(in: cell)
         return cell
+    }
+    
+    /// Adds an accessory type in the cell if necessary
+    func toggleAccessoryType(in cell: UnitCell) {
+        guard let viewController = viewController, let unit = cell.unit else { return }
+        if viewController.mode == .normal {
+            cell.accessoryType = (Category.getVariations(of: unit.unit) != nil) ? .detailButton : .none
+            cell.variation = unit
+            guard let variationSelected = Storage.getVariationSelected(for: unit.unit) else { return }
+            print(variationSelected, unit.unit.symbol)
+            cell.unit = UnitViewModel(unit: variationSelected, baseUnitValue: unit.baseUnitValue)
+        } else {
+            cell.accessoryType = viewController.variationSelected == unit.unit ? .checkmark : .none
+        }
+    }
+    
+    /// Asks the delegate for the editing style of a row at a particular location in a table view
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+    
+    /// Asks the delegate whether the background of the specified row should be indented while the table view is in editing mode
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    /// Tells the data source to move a row at a specific location in the table view to another location
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let unitMoved = units[sourceIndexPath.row]
+        units.remove(at: sourceIndexPath.row)
+        units.insert(unitMoved, at: destinationIndexPath.row)
     }
 }
 
@@ -60,6 +92,16 @@ extension UnitsTableViewDelegate: UITableViewDelegate {
         guard let cell = tableView.cellForRow(at: indexPath) as? UnitCell else { return }
         cell.valueTextField.isUserInteractionEnabled = true
         cell.valueTextField.becomeFirstResponder()
+    }
+    
+    /// Tells the delegate that the user tapped the detail button for the specified row
+    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? UnitCell,
+              let dimension = cell.unit,
+              let variation = cell.variation,
+              let variations = CategoryViewModel.getVariations(of: variation.unit, with: dimension.baseUnitValue)
+        else { return }
+        viewController?.coordinator?.showVariations(of: variation, units: variations, previousScreen: viewController)
     }
 }
 

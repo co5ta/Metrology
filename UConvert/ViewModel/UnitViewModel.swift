@@ -15,8 +15,9 @@ class UnitViewModel {
     var unit: Dimension
     
     /// Initialization
-    init(unit: Dimension) {
+    init(unit: Dimension, baseUnitValue: Double = 1) {
         self.unit = unit
+        self.baseUnitValue = baseUnitValue
     }
     
     /// Title of the unit
@@ -25,9 +26,8 @@ class UnitViewModel {
     }
     
     /// Value of the unit
-    var value: String {
-        let value = unit.converter.value(fromBaseUnitValue: baseUnitValue)
-        return String(format: "%g", value)
+    var value: Double {
+        unit.converter.value(fromBaseUnitValue: baseUnitValue)
     }
     
     /// Code to execute when the base unit value changed
@@ -37,7 +37,7 @@ class UnitViewModel {
     var textChanged = ""
     
     /// Value of the base unit to calculate all others values
-    var baseUnitValue: Double = 1 {
+    var baseUnitValue: Double {
         didSet { bindValue?() }
     }
     

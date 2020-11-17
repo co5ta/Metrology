@@ -31,9 +31,8 @@ class UnitCell: UITableViewCell {
         titleLabel.text = dimensionVM.title
         valueTextField.text = dimensionVM.textValue
         dimensionVM.bindValue = {
-            guard let currentValue = Double(self.valueTextField.text ?? "0"),
-                  currentValue != dimensionVM.value
-            else { return }
+            let currentValue = Double(self.valueTextField.text ?? "0") ?? 0
+            guard currentValue != dimensionVM.value else { return }
             self.valueTextField.text = dimensionVM.textValue
         }
     }

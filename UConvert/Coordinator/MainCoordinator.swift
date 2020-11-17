@@ -43,14 +43,17 @@ class MainCoordinator: Coordinator {
     }
     
     ///
-    func showVariations(baseVariation: DimensionViewModel, variations: [DimensionViewModel], previousScreen: UnitsViewController?) {
+    func showVariations(defaultVariation: DimensionViewModel,
+                        variations: [DimensionViewModel],
+                        selectedVariation: Dimension,
+                        previousScreen: UnitsViewController?) {
         guard let unitsVC = UnitsViewController.instantiate() else { return }
         unitsVC.coordinator = self
         unitsVC.dimensionVMs = variations
-        unitsVC.mode = .variation(dimension: baseVariation.dimension)
-        unitsVC.variationSelected = Storage.getVariationSelected(for: baseVariation.dimension) ?? baseVariation.dimension
+        unitsVC.mode = .variation(dimension: defaultVariation.dimension)
+        unitsVC.selectedVariation = selectedVariation
         unitsVC.previousScreen = previousScreen
-        unitsVC.navigationItem.title = baseVariation.title
+        unitsVC.navigationItem.title = defaultVariation.title
         navigationController.pushViewController(unitsVC, animated: true)
     }
 }

@@ -57,11 +57,11 @@ extension UnitsTableViewDelegate: UITableViewDataSource {
         guard let viewController = viewController, let dimensionVM = cell.dimensionVM else { return }
         if viewController.mode == .normal {
             cell.accessoryType = (Category.getVariations(of: dimensionVM.dimension) != nil) ? .detailButton : .none
-            cell.baseVariation = dimensionVM
             guard let variationSelected = Storage.getVariationSelected(for: dimensionVM.dimension) else { return }
+            cell.defaultVariation = cell.dimensionVM
             cell.dimensionVM = DimensionViewModel(dimension: variationSelected, baseUnitValue: dimensionVM.baseUnitValue)
         } else {
-            cell.accessoryType = viewController.variationSelected == dimensionVM.dimension ? .checkmark : .none
+            cell.accessoryType = viewController.selectedVariation == dimensionVM.dimension ? .checkmark : .none
         }
     }
     
@@ -96,11 +96,14 @@ extension UnitsTableViewDelegate: UITableViewDelegate {
     /// Tells the delegate that the user tapped the detail button for the specified row
     func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? UnitCell,
-              let dimension = cell.dimensionVM,
-              let baseVariation = cell.baseVariation,
-              let variations = CategoryViewModel.getVariations(of: baseVariation.dimension, with: dimension.baseUnitValue)
+              let dimensionVM = cell.dimensionVM,
+              let defaultVariation = cell.defaultVariation,
+              let variations = CategoryViewModel.getVariations(of: defaultVariation.dimension, with: defaultVariation.baseUnitValue)
         else { return }
-        viewController?.coordinator?.showVariations(baseVariation: baseVariation, variations: variations, previousScreen: viewController)
+        viewController?.coordinator?.showVariations(defaultVariation: defaultVariation,
+                                                    variations: variations,
+                                                    selectedVariation: dimensionVM.dimension,
+                                                    previousScreen: viewController)
     }
 }
 

@@ -29,7 +29,7 @@ class UnitsViewController: UIViewController {
     var mode = Mode.normal
     
     /// Variation selected
-    var variationSelected: Dimension?
+    var selectedVariation: Dimension?
     
     ///
     var previousScreen: UnitsViewController?
@@ -78,8 +78,8 @@ extension UnitsViewController {
               let unitsTableViewDelegate = unitsTableViewDelegate
         else { return }
         for index in 0..<unitsTableViewDelegate.dimensionVMs.count {
-            let value = dimensionVM.dimension.converter.baseUnitValue(fromValue: newValue)
-            unitsTableViewDelegate.dimensionVMs[index].baseUnitValue = value
+            let baseUnitValue = dimensionVM.dimension.converter.baseUnitValue(fromValue: newValue)
+            unitsTableViewDelegate.dimensionVMs[index].baseUnitValue = baseUnitValue
         }
     }
     
@@ -108,10 +108,10 @@ extension UnitsViewController {
               let cell = unitsTableView.cellForRow(at: indexPath) as? UnitCell,
               cell.accessoryType == .none,
               let dimension = mode.dimension,
-              let variationSelected = cell.dimensionVM?.dimension
+              let selectedVariation = cell.dimensionVM?.dimension
         else { return }
-        self.variationSelected = variationSelected
-        Storage.save(variationSelected: variationSelected, for: dimension)
+        self.selectedVariation = selectedVariation
+        Storage.save(variationSelected: selectedVariation, for: dimension)
         unitsTableView.visibleCells.forEach { (cell) in
             unitsTableViewDelegate?.toggleAccessoryType(in: cell as! UnitCell)
         }

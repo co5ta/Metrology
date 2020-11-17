@@ -23,7 +23,7 @@ class UnitCell: UITableViewCell {
     }
     
     /// Base dimension of a variation
-    var baseVariation: DimensionViewModel?
+    var defaultVariation: DimensionViewModel?
     
     /// Configures the cell with data
     private func configure() {

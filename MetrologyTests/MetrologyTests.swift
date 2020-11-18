@@ -31,11 +31,11 @@ class MetrologyTests: XCTestCase {
     func testWhenBaseUnitValueChangedUnitValueMustBeUpdated() {
         // Given
         let dimensionVM = DimensionViewModel(dimension: UnitAngle.radians)
-        XCTAssertEqual(dimensionVM.textValue, "0.017453292519943295")
+        XCTAssertEqual(dimensionVM.textValue, "0.0174533")
         XCTAssertEqual(dimensionVM.baseUnitValue, 1)
         // When
         dimensionVM.baseUnitValue = 3
         // Then
-        XCTAssertEqual(dimensionVM.textValue, "0.05235987755982988")
+        XCTAssertEqual(dimensionVM.textValue, "0.0523599")
     }
 }

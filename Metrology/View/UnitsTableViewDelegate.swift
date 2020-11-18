@@ -97,7 +97,7 @@ extension UnitsTableViewDelegate: UITableViewDelegate {
     func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? UnitCell,
               let dimensionVM = cell.dimensionVM,
-              let defaultVariation = cell.defaultVariation,
+              let defaultVariation = cell.defaultVariation ?? cell.dimensionVM,
               let variations = CategoryViewModel.getVariations(of: defaultVariation.dimension, with: defaultVariation.baseUnitValue)
         else { return }
         viewController?.coordinator?.showVariations(defaultVariation: defaultVariation,

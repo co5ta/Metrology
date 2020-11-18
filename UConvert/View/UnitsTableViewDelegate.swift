@@ -114,4 +114,11 @@ extension UnitsTableViewDelegate: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.isUserInteractionEnabled = false
     }
+    
+    /// Forces the point instead of the comma
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard string == "," else { return true }
+        textField.text! += "."
+        return false
+    }
 }

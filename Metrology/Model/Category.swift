@@ -118,6 +118,7 @@ enum Category: String, CaseIterable {
             ]
         case .Pressure: return [
                 UnitPressure.newtonsPerMetersSquared,
+                UnitPressure.hectopascals,
                 UnitPressure.bars,
                 UnitPressure.millimetersOfMercury,
                 UnitPressure.inchesOfMercury,

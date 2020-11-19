@@ -73,13 +73,14 @@ extension UnitsViewController {
     /// Updates the values in the table view
     @objc
     private func update(notification: Notification) {
-        guard let dimensionVM = notification.userInfo?["unitChanged"] as? DimensionViewModel,
-              let newValue = Double(dimensionVM.textChanged),
+        guard let dimensionChanged = notification.userInfo?["unitChanged"] as? DimensionViewModel,
+              let newValue = Double(dimensionChanged.textChanged),
               let unitsTableViewDelegate = unitsTableViewDelegate
         else { return }
+        let baseUnitValue = dimensionChanged.dimension.converter.baseUnitValue(fromValue: newValue)
         for index in 0..<unitsTableViewDelegate.dimensionVMs.count {
-            let baseUnitValue = dimensionVM.dimension.converter.baseUnitValue(fromValue: newValue)
-            unitsTableViewDelegate.dimensionVMs[index].baseUnitValue = baseUnitValue
+            guard let cell = unitsTableView.cellForRow(at: IndexPath(row: index, section: 0)) as? UnitCell else { return }
+            cell.dimensionVM?.baseUnitValue = baseUnitValue
         }
     }
     
@@ -112,9 +113,7 @@ extension UnitsViewController {
         else { return }
         self.selectedVariation = selectedVariation
         Storage.save(variationSelected: selectedVariation, for: dimension)
-        unitsTableView.visibleCells.forEach { (cell) in
-            unitsTableViewDelegate?.toggleAccessoryType(in: cell as! UnitCell)
-        }
+        unitsTableView.reloadData()
         previousScreen?.unitsTableView.reloadData()
     }
 }

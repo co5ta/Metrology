@@ -45,23 +45,26 @@ extension UnitsTableViewDelegate: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "UnitCell", for: indexPath) as? UnitCell
         else { return UnitCell() }
-        cell.dimensionVM = dimensionVMs[indexPath.row]
         cell.valueTextField.delegate = self
         cell.backgroundColor = indexPath.row % 2 == 0 ? .systemBackground : .secondarySystemBackground
-        toggleAccessoryType(in: cell)
+        toggleAccessoryType(in: cell, dimensionVM: dimensionVMs[indexPath.row])
         return cell
     }
     
     /// Adds an accessory type in the cell if necessary
-    func toggleAccessoryType(in cell: UnitCell) {
-        guard let viewController = viewController, let dimensionVM = cell.dimensionVM else { return }
+    func toggleAccessoryType(in cell: UnitCell, dimensionVM: DimensionViewModel) {
+        guard let viewController = viewController else { return }
         if viewController.mode == .normal {
             cell.accessoryType = (Category.getVariations(of: dimensionVM.dimension) != nil) ? .detailButton : .none
-            guard let variationSelected = Storage.getVariationSelected(for: dimensionVM.dimension) else { return }
-            cell.defaultVariation = cell.dimensionVM
-            cell.dimensionVM = DimensionViewModel(dimension: variationSelected, baseUnitValue: dimensionVM.baseUnitValue)
+            if let variationSelected = Storage.getVariationSelected(for: dimensionVM.dimension) {
+                cell.defaultVariation = dimensionVM
+                cell.dimensionVM = DimensionViewModel(dimension: variationSelected, baseUnitValue: dimensionVM.baseUnitValue)
+            } else {
+                cell.dimensionVM = dimensionVM
+            }
         } else {
             cell.accessoryType = viewController.selectedVariation == dimensionVM.dimension ? .checkmark : .none
+            cell.dimensionVM = dimensionVM
         }
     }
     

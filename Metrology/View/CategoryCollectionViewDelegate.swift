@@ -74,8 +74,9 @@ extension CategoryCollectionViewDelegate: UICollectionViewDelegateFlowLayout {
         var width, height: CGFloat
         switch(collectionView.traitCollection.horizontalSizeClass, collectionView.traitCollection.verticalSizeClass) {
         case (.regular, .regular):
-            itemByLine = 4
-            width = (collectionView.frame.width - (spacing*5)) / itemByLine
+            let isLandscape = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation.isLandscape ?? true
+            itemByLine = isLandscape ? 4 : 3
+            width = (collectionView.frame.width - (spacing * (itemByLine+1))) / itemByLine
             height = width * 0.5
         case (.regular, .compact), (.compact, .compact):
             width = (collectionView.frame.width - (spacing*4)) / 3

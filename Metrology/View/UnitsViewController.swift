@@ -14,11 +14,6 @@ class UnitsViewController: UIViewController {
     /// Table view of units
     @IBOutlet weak var unitsTableView: UITableView!
     
-    /// 
-    var dimensionVMs = [DimensionViewModel]() {
-        didSet { unitsTableViewDelegate = UnitsTableViewDelegate(dimensionVMs: dimensionVMs) }
-    }
-    
     /// Delegate of the units table view
     var unitsTableViewDelegate: UnitsTableViewDelegate?
     
@@ -81,6 +76,7 @@ extension UnitsViewController {
         for index in 0..<unitsTableViewDelegate.dimensionVMs.count {
             guard let cell = unitsTableView.cellForRow(at: IndexPath(row: index, section: 0)) as? UnitCell else { return }
             cell.dimensionVM?.baseUnitValue = baseUnitValue
+            cell.defaultVariation?.baseUnitValue = baseUnitValue
         }
     }
     

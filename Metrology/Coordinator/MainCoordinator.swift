@@ -37,7 +37,7 @@ class MainCoordinator: Coordinator {
     func showUnits(of categoryVM: CategoryViewModel) {
         guard let unitsVC = UnitsViewController.instantiate() else { return }
         unitsVC.coordinator = self
-        unitsVC.dimensionVMs = categoryVM.dimensionVMs
+        unitsVC.unitsTableViewDelegate = UnitsTableViewDelegate(dimensionVMs: categoryVM.dimensionVMs)
         unitsVC.navigationItem.title = categoryVM.title
         navigationController.pushViewController(unitsVC, animated: true)
     }
@@ -49,7 +49,7 @@ class MainCoordinator: Coordinator {
                         previousScreen: UnitsViewController?) {
         guard let unitsVC = UnitsViewController.instantiate() else { return }
         unitsVC.coordinator = self
-        unitsVC.dimensionVMs = variations
+        unitsVC.unitsTableViewDelegate = UnitsTableViewDelegate(dimensionVMs: variations)
         unitsVC.mode = .variation(dimension: defaultVariation.dimension)
         unitsVC.selectedVariation = selectedVariation
         unitsVC.previousScreen = previousScreen

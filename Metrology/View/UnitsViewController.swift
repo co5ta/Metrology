@@ -44,10 +44,10 @@ extension UnitsViewController {
     
     /// Adds right bar button according to the view controller context
     private func addRightBarButton() {
-        if mode == .normal {
-            let button = UIBarButtonItem(title: "Reorder", style: .plain, target: self, action: #selector(toggleEditMode))
-            navigationItem.rightBarButtonItem = button
-        } else {
+        if mode != .normal {
+//            let button = UIBarButtonItem(title: "Reorder", style: .plain, target: self, action: #selector(toggleEditMode))
+//            navigationItem.rightBarButtonItem = button
+//        } else {
             let button = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(selectVariation))
             navigationItem.rightBarButtonItem = button
         }

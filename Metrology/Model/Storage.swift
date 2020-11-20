@@ -33,14 +33,10 @@ struct Storage {
     /// Fetchs saved dimensions of a category
     static func getDimensions(of category: Category) -> [Dimension]? {
         let filePath = documentDirectory.appendingPathComponent(category.rawValue)
-        do {
-            let data = try Data(contentsOf: filePath)
-            let dimensions = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [Dimension]
-            return dimensions
-        } catch {
-            print(#function, error.localizedDescription)
-        }
-        return nil
+        guard let data = try? Data(contentsOf: filePath),
+              let dimensions = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [Dimension]
+        else { return nil }
+        return dimensions
     }
     
     static func save(variationSelected: Dimension, for dimension: Dimension) {
@@ -55,13 +51,9 @@ struct Storage {
     
     static func getVariationSelected(for dimension: Dimension) -> Dimension? {
         let filePath = documentDirectory.appendingPathComponent(dimension.symbol)
-        do {
-            let data = try Data(contentsOf: filePath)
-            let dimension = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? Dimension
-            return dimension
-        } catch {
-            print(#function, error.localizedDescription)
-        }
-        return nil
+        guard let data = try? Data(contentsOf: filePath),
+              let dimension = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? Dimension
+        else { return nil }
+        return dimension
     }
 }

@@ -15,7 +15,7 @@ enum Category: String, CaseIterable {
     case Length, Area, Volume, Angle
     case Mass, Pressure
     case Acceleration, Duration, Speed
-    case Energy, Power, Temperature
+    case Temperature, Power, Energy
     case ElectricCharge
     case FuelEfficiency
     
@@ -139,6 +139,16 @@ enum Category: String, CaseIterable {
                 UnitSpeed.milesPerHour,
                 UnitSpeed.knots
             ]
+        case .FuelEfficiency: return [
+                UnitFuelEfficiency.litersPer100Kilometers,
+                UnitFuelEfficiency.milesPerGallon,
+                UnitFuelEfficiency.milesPerImperialGallon,
+            ]
+        case .Temperature: return [
+                UnitTemperature.kelvin,
+                UnitTemperature.celsius,
+                UnitTemperature.fahrenheit
+            ]
         case .Energy: return [
                 UnitEnergy.joules,
                 UnitEnergy.calories,
@@ -148,19 +158,9 @@ enum Category: String, CaseIterable {
                 UnitPower.watts,
                 UnitPower.horsepower
             ]
-        case .Temperature: return [
-                UnitTemperature.kelvin,
-                UnitTemperature.celsius,
-                UnitTemperature.fahrenheit
-            ]
         case .ElectricCharge: return [
                 UnitElectricCharge.coulombs,
                 UnitElectricCharge.ampereHours
-            ]
-        case .FuelEfficiency: return [
-                UnitFuelEfficiency.litersPer100Kilometers,
-                UnitFuelEfficiency.milesPerGallon,
-                UnitFuelEfficiency.milesPerImperialGallon,
             ]
         }
     }
